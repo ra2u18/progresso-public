@@ -1,0 +1,9 @@
+migrations/
+node_modules/
+progresso/
+logs/
+.env
+.DS_Store
+app.db
+dumb.rdb
+gulpfile.js

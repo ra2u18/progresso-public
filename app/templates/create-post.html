@@ -1,0 +1,180 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<body class="contact-page sidebar-collapse">
+    <div id="contactUsMap" class="big-map"></div>
+    <div class="main main-raised pb-4 pt-4">
+        <h2 class="title text-center"> {{ legend }} </h2>
+        <div class="row p-5">
+            <div class="col-md-5 mb-2">
+                <!-- Check if user is authenticated before submitting form. -->
+                {% if current_user.is_authenticated %}
+                    <div class="col-md-8 ml-auto mr-auto">
+                        <h3 class="title pb-5">Formular Proiect</h3>
+                        <form method="POST" enctype=multipart/form-data>
+                            {{ form.hidden_tag() }}
+                            <!-- Post title input. -->
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Titlu Postare</label>
+                                {{ form.title_bg(class="form-control" ~ (" is-invalid" if form.title_bg.errors else ""), id="exampleFormControlTextarea1") }}
+                                {% if form.title_bg.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.title_bg.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            <!-- Post description input. -->
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Descriere Postare</label>
+                                {{ form.description_bg(class="form-control" ~ (" is-invalid" if form.description_bg.errors else ""), id="exampleFormControlInput1") }}
+                                {% if form.description_bg.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in form.description_bg.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% endif %} 
+                            </div>
+
+                            
+                            {% if not is_edit %}
+                            <!-- Post header image input. -->
+                            <div class="fileinput fileinput-new text-center mb-5 mt-5" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail img-raised">
+                                    <img src="https://style.anu.edu.au/_anu/4/images/placeholders/person_8x10.png" alt="...">
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail img-raised"></div>
+                                <div>
+                                    <span class="btn btn-raised btn-round btn-default btn-file">
+                                        <span class="fileinput-new">Adauga Fundal</span>
+                                        <span class="fileinput-exists">Change</span>
+                                        <input type="file" name="project_bg" />
+                                    </span>
+                                    <a href="#pablo" class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput"><i class="fa fa-times"></i> Remove</a>
+                                </div>
+                            </div>
+                            {% endif %}
+                            <!-- Post title intro input. -->
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Titlu Introducere</label>
+                                {{ form.title_intro(class="form-control post-title-intro" ~ (" is-invalid" if form.title_intro.errors else ""), id="exampleFormControlInput1") }} 
+                                {% if form.title_intro.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.title_intro.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <!-- Post description intro input. -->
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">Descriere Introducere</label>
+                                {{ form.description_intro(class="form-control post-description-intro" ~ (" is-invalid" if form.description_intro.errors else ""), id="exampleFormControlTextarea1", row="3") }}
+                                {% if form.description_intro.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.description_intro.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <!-- Post title end input. -->
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Titlu Sfarsit</label>
+                                {{ form.title_end(class="form-control post-title-end" ~ (" is-invalid" if form.title_end.errors else ""), id="exampleFormControlInput1") }}
+                                {% if form.title_end.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.title_end.errors %}
+                                            <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <!-- Post description end input. -->
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">Descriere Final</label>
+                                {{ form.description_end(class="form-control post-description-end" ~ (" is-invalid" if form.description_end.errors else ""), id="exampleFormControlTextarea1", row="3") }}
+                                {% if form.description_end.errors %}
+                                    <div class="invalid-feedback">
+                                        {% for error in form.description_end.errors %}
+                                        <span>{{ error }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <!-- Post category input. -->
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1">Categorii Proiect</label>
+                                {{ form.badges(class="form-control selectpicker", id="exampleFormControlSelect1", **{"data-style":"btn btn-link" }) }}
+                            </div>
+                            {% if not is_edit %}
+                            <!-- Post body images. -->
+                            <div class="form-group form-file-upload form-file-multiple">
+                                <input type="file" name="images" multiple="" class="inputFileHidden">
+                                <div class="input-group">
+                                    <input type="text" class="form-control inputFileVisible" placeholder="Multiple Files" multiple>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-fab btn-round btn-info">
+                                            <i class="material-icons">layers</i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            {% endif %}
+                            <!-- Post submit button. -->
+                            <div class="tooltip-wrapper" data-toggle="tooltip" data-placement="top" title="Completeaza campurile" style="display:inline-block;">
+                                {{ form.submit(class="btn btn-lg btn-primary mt-5 mb-5") }}
+                            </div>
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="col-md-6 ml-auto">
+                <div class="row">
+                    <div class="col pt-2">
+                        <h3 class="title">Instructini de folosire formular</h3>
+                        <p class="description" style="color: #333333">
+                            Acest formular se foloseste strict pentru postarea proiectelor si este sustinut de regulile:
+                            <ul>
+                                <li>
+                                    <p>Pentru a introduce text boldat introduceti textul intre ** **</p>
+                                </li>
+                                <li>
+                                    <p>Pentru a introduce text italic introduceti textul intre * *</p> 
+                                </li>
+                                <li>
+                                    <p>Pentru a introduce texte tip header introduceti in fata textului #</p> 
+                                </li>
+                                <li>
+                                    <p>Pentru a introduce un quote introduceti inaintea textului ></p>
+                                </li>
+                                <li>
+                                    <p>Pentru a introduce text in lista (list markers) folositi * in fata textului</p> 
+                                </li>
+                                <li>
+                                    <p>Pentru a introduce link inconjurati textul cu &lt; link &gt;</p> 
+                                </li>
+                                <li>
+                                    <p style="color:red"><strong>NU FOLOSITI MARKDOWN PRIMELE 80 DE CARACTERE</strong></p>
+                                </li>
+                            </ul>
+                        </p>
+                    </div>
+                </div>
+                <div style="height:7.5vh"></div>
+                <div class="col p-4 mt-5"style="background-color: #242A2B; border-radius: 1rem; overflow: scroll; height: 80vh">
+                    <h3 class="title text-center" style="color:white; letter-spacing: 1.5px;" id="preview_text">Previzualizarea Postarii live</h3>
+                    <h3 class="title" id="preview_title_intro" style="color:white;"></h3>
+                    <div id="preview_description_intro" style="color:white;"></div>
+                    <h3 class="title" id="preview_title_end" style="color:white;"></h3>
+                    <div id="preview_description_end" style="color:white;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='assets/js/post-preview/bundle.js') }}"></script>
+  </body>
+{% endblock content %}

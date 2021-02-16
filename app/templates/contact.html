@@ -1,0 +1,136 @@
+{% extends "layout.html" %}
+
+{% block meta %}
+<meta name="description" content="Contacteaza Progresso Nel Edilizia astazi si fa schimbarea pe care ti-o doresti! Iti sustinem ideile, iti suntem alaturi.">
+{% endblock meta %}
+
+{% block content %}
+<body class="sidebar-collapse">
+    <div class="section"></div>
+    <div class="main main-raised mb-4 pt-5 pb-5">
+      <div class="contact-content">
+        <div class="container">
+          <h2 class="title">Trimite-ne un mesaj</h2>
+          <div class="row">
+            <div class="col-md-6">
+              <p class="description">Ne puteti contacta in legatura cu orice Produs sau Serviciu. Vom raspunde cat de rapid posibil. </p>
+              </p>
+              <form role="form" id="contact-form" enctype="multipart/form-data" method="post">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                  <label for="name" class="bmd-label-floating">Numele intreg</label>
+                  {{ form.name(class="form-control" ~ ("is-invalid" if form.name.errors else ""), id="name") }}
+                  {% if form.name.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.name.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmails" class="bmd-label-floating">Adresa de email</label>
+                  {{ form.email(class="form-control" ~(" is-invalid" if form.email.errors else ""), id="exampleInputEmails") }}
+                  {% if form.email.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.email.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                  {% endif %}
+                  <span class="bmd-help">We'll never share your email with anyone else.</span>
+                </div>
+                <div class="form-group">
+                  <label for="phone" class="bmd-label-floating">Numar de telefon</label>
+                  {{ form.phone(class="form-control" ~ (" in-invalid" if form.phone.errors else ""), id="phone") }}
+                  {% if form.phone.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.phone.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="form-group label-floating">
+                  <label class="form-control-label bmd-label-floating" for="message">Mesajul dumneavoastra...</label>
+                  {{ form.message(class="form-control" ~ (" is-invalid" if form.message.errors else ""), id="message") }}
+                  {% if form.message.errors %}
+                    <div class="invalid-feedback">
+                        {% for error in form.message.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                  {% endif %}
+                </div>
+                <div class="submit text-center">
+                  {{ form.contact_submit(class="btn btn-primary btn-raised btn-round") }}
+                </div>
+              </form>
+            </div>
+            <div class="col-md-4 ml-auto">
+              <div class="info info-horizontal">
+                <div class="icon icon-primary">
+                  <i class="material-icons">pin_drop</i>
+                </div>
+                <div class="description">
+                  <h4 class="info-title">Biroul Nostru</h4>
+                  <p> Strada Calea Sucevei, nr. 114,<br>
+                    Suceava, Romania
+                  </p>
+                </div>
+              </div>
+              <div class="info info-horizontal">
+                <div class="icon icon-primary">
+                  <i class="material-icons">phone</i>
+                </div>
+                <div class="description">
+                  <h4 class="info-title">Telefon</h4>
+                  <p>Danut Andronache<br>
+                    +40 744 993 005<br>
+                    Lun - Vin, 8:00-19:00
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+{% endblock content %}
+
+{% block javascript %}
+  <script type="text/javascript">
+    var form = document.getElementById('contact-form');
+    console.log(form)
+    // Adds a listener for the "submit" event.
+    form.addEventListener('submit', function(event) {
+
+      // Prevents the browser from submitting the form
+      // and thus unloading the current page.
+      event.preventDefault();
+
+      // Creates a timeout to call `submitForm` after one second.
+      setTimeout(submitForm, 1000);
+
+      // Keeps track of whether or not the form has been submitted.
+      // This prevents the form from being submitted twice in cases
+      // where `hitCallback` fires normally.
+      var formSubmitted = false;
+
+      function submitForm() {
+        if (!formSubmitted) {
+          formSubmitted = true;
+          form.submit();
+        }
+      }
+
+      // Sends the event to Google Analytics and
+      // resubmits the form once the hit is done.
+      ga('send', 'event', 'Forma de Contact', 'submit', {
+        hitCallback: submitForm
+      });
+  });
+  </script>
+
+{% endblock javascript %}

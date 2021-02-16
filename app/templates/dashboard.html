@@ -1,0 +1,390 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="page-header header-filter" data-parallax="true" style="background-image: url('../static/assets/images/general/dashboard-header.jpg'); background-position: center;"></div>
+<body class='profile-page sidebar-collapse'>
+    <div class="main">
+        <div class="profile-content">
+            <div class="container">
+            <div class="row">
+
+                <div class="col-md-6 ml-auto mr-auto">
+
+                    <div class="profile">
+                        <div class="avatar">
+                        <img src="../static/assets/images/general/default.jpg" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+                        </div>
+                        <div class="name">
+                        <h3 class="title">Danut Andronache</h3>
+                        <h6>CEO</h6>
+                        </div>
+                    </div>
+
+                    <div class="follow">
+                        <button class="btn btn-fab btn-primary btn-round" rel="tooltip" title="" data-original-title="Edit profile">
+                            <i class="material-icons">edit</i>
+                        </button>
+                    </div>
+    
+                </div>
+            </div>
+            <div class="description text-center">
+                <p>CEO al Companiei Progresso Nel Edilizia specializat in constructii, instalatii si instalatii electrice.</p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 ml-auto mr-auto">
+                <div class="profile-tabs">
+                    <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active show" href="#statistici" role="tab" data-toggle="tab" aria-selected="true">
+                        <i class="material-icons">show_chart</i>
+                        Statistici
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link show" href="#proiecte" role="tab" data-toggle="tab" aria-selected="true">
+                        <i class="material-icons">palette</i>
+                        Proiecte
+                        </a>
+                    </li>
+                    </ul>
+                </div>
+                </div>
+            </div>
+            <div class="tab-content tab-space">
+                <div class="tab-pane work active show" id="statistici">
+                    <div class="row">
+                        <div class="col-md-7 ml-auto mr-auto ">
+                            <h4 class="title">Tabel Muncitori</h4>
+                            
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">#</th>
+                                        <th>Nume</th>
+                                        <th>Calificare</th>
+                                        <th>Inscris din</th>
+                                        <th class="text-right">Actiuni</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-row">
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <div class="col-md-2 mr-auto ml-auto stats">
+                            <h4 class="title">Alte Actiuni</h4>
+                            <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#add-employee">
+                                Adauga Angajat
+                            </button>
+                            <hr>
+                            <h4 class="title">Instructiuni tabel</h4>
+                            <p class="description">
+                                Pentru a marca un muncitor ca prezent, apasati butonul verde.
+                                Pentru a marca un muncitor absent plus alte observatii, apasati butonul rosu.
+                            </p>
+                          </div>
+                    </div>
+                    {% if reports %}
+                    <div class="row pt-5">
+                        <div class="col-md-7 ml-auto mr-auto ">
+                            <h4 class="title">Rapoarte muncitori</h4>
+                                {% for report in reports %}
+                                    {% if report.employee is not none %}    
+                                        {% if report.check_in == false %}
+                                            <div class="alert alert-danger" role="alert">
+                                                Pe data de {{ report.timestamp.strftime('%d/%m/%Y') }} angajatul <strong>{{ report.employee.name }}</strong> a fost absent.
+                                                Observatia este urmatoarea: <strong>{{ report.observations }}</strong> 
+                                            </div>
+                                        {% else %}
+                                            <div class="alert alert-success" role="alert">
+                                                Pe data de {{ report.timestamp.strftime('%d/%m/%Y') }} angajatul <strong>{{ report.employee.name }}</strong> a fost prezent.
+                                            </div>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        <div class="col-md-2 mr-auto ml-auto stats"></div>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="tab-pane work show" id="proiecte">
+                    <div class="row">
+                        <div class="col-md-4 ml-auto mr-auto">
+                            <div class="card" style="width: 17rem;">
+                                <div class="card-body">
+                                  <h4 class="card-title">Export Postari</h4>
+                                  <h6 class="card-subtitle mb-2 text-muted"></h6>
+                                  <p class="card-text">
+                                      Aceasta functionalitate va permite sa exportati postarile dvs. pe mail. 
+                                  </p>
+                                  {% if not current_user.get_task_in_progress('export_posts') %}
+                                    <a href="{{ url_for('main.export_posts') }}" class="card-link">Export</a>
+                                  {% endif %}
+                                </div>
+                              </div>
+                        </div>
+                        <div class="col-md-4 ml-auto mr-auto">
+                            <div class="card" style="width: 17rem;">
+                                <div class="card-body">
+                                  <h4 class="card-title">Export Rapoarte</h4>
+                                  <h6 class="card-subtitle mb-2 text-muted"></h6>
+                                  <p class="card-text">
+                                      Aceasta functionalitate va permite sa exportati rapoartele dvs. pe mail. 
+                                  </p>
+                                  {% if not current_user.get_task_in_progress('export_reports') %}
+                                    <a href="{{ url_for('main.export_reports') }}" class="card-link">Export</a>
+                                  {% endif %}
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+</body>
+
+<script type="text/javascript">
+
+    var current_page = 1
+    
+    $(document).ready(function(){
+        request_employees();
+    });
+
+    function request_employees(){
+
+        $.post('/auth/request_employees', {
+            current_page: current_page,
+        }).done(function(data){
+            $('#table-row').html(data.result.map(item => `
+                <tr>
+                    <td class="text-center">${item.employee.id}</td>
+                    <td>${item.employee.name}</td>
+                    <td>${item.job}</td>
+                    <td>${item.employee.since}</td>
+                    <td class="td-actions text-right">
+                        <button onclick="checkedIn('${item.employee.id}','${item.employee.name}');" id="checkIn" type="button" rel="tooltip" class="btn btn-success" data-toggle="modal" data-target="#checkin-employee">
+                            <i class="material-icons">done</i>
+                        </button>
+                        <button onclick="notCheckedIn('${item.employee.id}','${item.employee.name}');" id="notCheckedIn" type="button" class="btn btn-danger" data-toggle="modal" data-target="#report-employee">
+                            <i class="material-icons">close</i>
+                        </button>
+                        <button onclick="deleteEmployee('${item.employee.id}','${item.employee.name}');" id="deleteEmployee" type="button" class="btn btn-link" data-toggle="modal" data-target="#delete-employee">
+                            <i class="material-icons">delete</i>
+                        </button>
+                    </td>
+                </tr>
+            `))
+        }).fail(function(){
+            console.log('error')
+        });
+
+    }
+
+    function checkedIn(id, name){
+        // Check for form submission and then post to the server the data
+        document.getElementById('checkin_employeeName').innerHTML = name
+        
+        document.getElementById('checkin-btn').onclick = function(){
+
+            $.post('/auth/checkin_employee', {
+                id: id,
+            }).done(function(data){
+                location.href = "{{url_for('auth.dashboard')}}"
+                alert(`Muncitorul ${name} a fost marcat prezent!`);
+            }).fail(function(){
+                alert(`Muncitorul ${name} nu a putut fi raportat!`);
+            })
+            
+        }   
+    }
+
+    function deleteEmployee(id, name){
+        // Check for form submission and then post to the server the data
+        document.getElementById('delete_employeeName').innerHTML = name
+        
+        document.getElementById('delete-btn').onclick = function(){
+
+            $.post('/auth/delete_employee', {
+                id: id,
+            }).done(function(data){
+                location.href = "{{url_for('auth.dashboard')}}"
+                alert(`Muncitorul ${name} a fost sters din baza de date!`);
+            }).fail(function(){
+                alert(`Muncitorul ${name} nu a putut fi sters din baza de date!`);
+            })
+            
+        }
+    }
+
+
+    function notCheckedIn(id, name){
+        console.log(id + " --------- " + name)
+        // Check for form submission and then post to the server the data
+        document.getElementById('checkout_employeeName').innerHTML = name
+        // Create listener for the textarea element
+        const observation_textarea = document.getElementsByName('observation')[0]
+        var observation = undefined
+
+        // Refresh the page if modal is closed
+        $('#report-employee').on('hidden.bs.modal', function () {
+            location.reload()
+        })
+
+        observation_textarea.addEventListener('keyup', event=>{
+            observation = event.target.value
+        })
+
+
+        $('#report-employee').submit(function(e){
+            e.preventDefault()
+
+            $.post('/auth/report_employee', {
+                id: id,
+                observation: observation
+            }).done(function(data){
+                location.href = "{{url_for('auth.dashboard')}}"
+                alert(`Muncitorul ${name} a fost raportat!`);
+            }).fail(function(){
+                alert(`Muncitorul ${name} nu a putut fi raportat!`);
+            })
+        
+        })  
+    }
+
+
+</script>
+
+{% endblock content %}
+
+{% block modals %}
+<!-- Modal for checking-in an employee. -->
+<div class="modal" tabindex="-1" role="dialog" id="checkin-employee">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Formular de prezenta angajat</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <p>Dupa ce veti apasa pe butonul <strong>Confirm</strong>, muncitorul <span id="checkin_employeeName"></span> va fi marcat prezent </p>
+        </div>
+        <div class="modal-footer">
+            <button id="checkin-btn" type="button" class="btn btn-primary">Confirm</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<!-- Modal for reporting employee. -->
+<div class="modal" tabindex="-1" role="dialog" id="report-employee">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Formular de absenta angajat <span id="checkout_employeeName">asdasdas</span></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form method='POST' enctype="multipart/form-data" autocomplete="off">
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1">Example textarea</label>
+                    <textarea name="observation" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+                {{ no_checkin_form.no_checkin_submit(class="btn btn-lg btn-primary mt-5 mb-5") }}
+            </form>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Modal for deleting an employee. -->
+<div class="modal" tabindex="-1" role="dialog" id="delete-employee">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Stergere angajat</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <p>Dupa ce veti apasa pe butonul <strong>Sterge</strong>, muncitorul <span id="delete_employeeName"></span> va fi sters din baza de date! </p>
+        </div>
+        <div class="modal-footer">
+            <button id="delete-btn" type="button" class="btn btn-danger">Sterge</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<!-- Modal for adding employee. -->
+<div class="modal fade" id="add-employee" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-signup" role="document">
+      <div class="modal-content">
+        <div class="card card-signup card-plain">
+            
+            <div class="modal-header">
+                <h3 class="modal-title card-title">Inregistreaza Angajat</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i class="material-icons">clear</i>
+                </button>
+            </div>
+
+          <!-- Modal body -->
+            <div class="modal-body mt-5">
+                <div class="row">
+                    <div class="col-md-5 mr-auto ml-auto">
+                        <form method="POST" enctype="multipart/form-data" autocomplete="off">
+                            {{ add_employee_form.hidden_tag() }}
+                            <div class="form-group">
+                                <label for="exampleFormControlInput1">Nume intreg</label>
+                                {{ add_employee_form.name(class="form-control" ~ (" is-invalid" if add_employee_form.name.errors else ""), id="exampleFormControlInput1") }}
+                                {% if add_employee_form.name.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in add_employee_form.name.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea1">Despre acest Angajat</label>
+                                {{ add_employee_form.about(class="form-control" ~ (" is-invalid" if add_employee_form.about.errors else ""), id="exampleFormControlTextarea1") }}
+                                {% if add_employee_form.about.errors %}
+                                <div class="invalid-feedback">
+                                    {% for error in add_employee_form.about.errors %}
+                                        <span>{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="form-group">
+                                <label class="label-control">Ziua angajarii</label>
+                                <input name="datepicker" type="text" class="form-control datetimepicker" value="10/05/2016"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect1">Categorie munca</label>
+                                {{ add_employee_form.job(class="form-control selectpicker", id="exampleFormControlSelect1", **{"data-style":"btn btn-link" }) }}
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                {{ add_employee_form.employeeform_submit(class="btn btn-lg btn-primary mt-5 mb-5") }}
+                            </div>
+                        </form> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock modals %}

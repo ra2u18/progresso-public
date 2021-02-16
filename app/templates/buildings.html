@@ -1,0 +1,85 @@
+{% extends "layout.html" %}
+
+{% block meta %}
+<meta name="description" content="Serviciile noastre de constructii beneficiaza de consultanta gratuita, simulare a proiectului dvs. si un look final modern/italienesc...">
+{% endblock meta %}
+
+{% block content %}
+
+    <div class="page-header header-filter header-small" data-parallax="true" style="background-image: url('../static/assets/images/general/building/construction-2.jpg'); transform: translate3d(0px, 0px, 0px);">
+        <div class="container"> 
+            <div class="row">
+                <div class="col-md-8">
+                    <h2 class="title">Constructii cladiri social-culturale</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main main-raised mb-4 pt-5 pb-5">
+        <div class="container">
+
+            <!-- Intro text -->
+            <div class="intro">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4 class="title">De ce ai alege serviciile de constructie traditionala de la noi?</h4>
+                        <p>
+                            Progresso Nel Edilizia investeste, proiecteaza, construieste si intretine instructura sociala in judetele din Romania.
+
+                            Experienta si abilitatile noastre dinamice de management confirma faptul ca putem livra pachete de servicii eficiente din punct de vedere al costurilor, personalizate pentru fiecare client. Suntem onorati sa lucram cu parteneri dornici sa dezvolte facilitati care sa ofere oamenilor cele mai bune oportunitati de a se dezvolta.
+
+                        </p>
+                    </div>
+                    <div class="col-md-12">
+                        <h4 class="title">Cum lucram?</h4>
+                        <p>
+                            Echipa noastra opereaza pe intregul ciclu de viata al infrastructurii, combinand capacitatea de investitie cu cea de constructie si suport pentru furnizarea infrastructurilor mari si complexe. Cu peste 15 ani de experienta in furnizarea de scheme de infrastructuri complexe, lucram cu cele mai inalte
+                            niveluri de calitate, siguranta, expertiza tehnica.
+                        </p>
+                    </div> 
+                </div>
+            </div>
+
+            <!-- What we do -->
+            <div class="row">
+                <div class="col-md-4">
+                  <div class="card card-product card-plain">
+                    <div class="card-header card-header-image">
+                        <img src="{{url_for('static', filename='assets/images/general/building/sketch.jpeg')}}" alt="">
+                    </div>
+                    <div class="card-body text-center">
+                      <h4 class="card-title">
+                        Proiectam si gestionam lucrarea
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="col-md-4">
+                  <div class="card card-product card-plain">
+                    <div class="card-header card-header-image">
+                        <img src="{{url_for('static', filename='assets/images/general/building/construction.jpeg')}}" alt="">
+                    </div>
+                    <div class="card-body">
+                      <h4 class="card-title">Dezvoltam si construim</h4>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card card-product card-plain">
+                    <div class="card-header card-header-image">
+                        <img src="{{url_for('static', filename='assets/images/general/building/done.jpeg')}}" alt="">
+                    </div>
+                    <div class="card-body">
+                      <h4 class="card-title">Operam si intretinem activitatea</h4>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+{% endblock content %}

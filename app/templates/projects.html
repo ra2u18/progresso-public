@@ -1,0 +1,212 @@
+{% extends "layout.html" %}
+
+{% block meta %}
+<meta name="description" content="Portofoliu de proiecte Progresso Nel Edilizia axata pe arii precum: constructii, structuri metalice, termoficare si retele de apa.">
+{% endblock meta %}
+
+{% block content %}
+
+<div class="page-header header-filter header-small" data-parallax="true" style="background-image: url('./static/assets/images/general/portfolio-bg.jpg'); background-position: bottom;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 ml-auto mr-auto text-center">
+          <h2 class="title">Proiecte - Progresso Nel Edilizia</h2>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="main main-raised">
+
+    <div class="container">
+      <div class="section">
+
+        <!-- Dynamic project section -->
+        <div class="row">
+          <div class="col-md-8 ml-auto mr-auto text-center">
+            <h2 class="title">Rasfoieste prin Proiecte</h2>
+            <ul class="nav nav-pills nav-pills-primary">
+              <li class="nav-item" id="all-link">
+                  <a class="nav-link active show" href="#pill0" data-toggle="tab">Toate</a>
+              </li>
+              <li class="nav-item" id="construction-link">
+                <a class="nav-link" href="#pill1" data-toggle="tab">Constructii</a>
+              </li>
+              <li class="nav-item" id="installation-link">
+                <a class="nav-link" href="#pill2" data-toggle="tab">Instalatii</a>
+              </li>
+              <!--
+                <li class="nav-item" id="electricity-link">
+                  <a class="nav-link" href="#pill3" data-toggle="tab">Instalatii Electrice</a>
+                </li>
+              -->
+            </ul>
+
+            <div class="tab-content tab-space">
+              <div class="tab-pane active show" id="pill0">
+                  <!-- Every project Available -->
+                  <div class="row" id="all-pill"></div>
+              </div>
+              <div class="tab-pane" id="pill1">
+                  <!-- Construction projects only -->
+                  <div class="row" id="construction-pill"></div>
+              </div>
+              <div class="tab-pane" id="pill2">
+                  <!-- Installation projects only -->
+                  <div class="row" id="installation-pill"></div>
+              </div>
+              <!--
+                <div class="tab-pane" id="pill3">ß
+                    <div class="row" id="electricity-pill"></div>
+                </div>
+              -->
+              <!-- Pagination -->
+              <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item" id="prev-link">
+                      <a class="page-link" href="javascript:pill_paginate('prev');" tabindex="-1">Previous</a>
+                    </li>
+                    <li class="page-item" id="next-link">
+                      <a class="page-link" href="javascript:pill_paginate('next');">Next</a>
+                    </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+</div>
+  {% block javascript %}
+    <script type='text/javascript'>
+    
+    /* Variable Declaration */
+    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    
+    current_page = 1;
+    category = ''
+    pill = '#all-pill';
+
+    all_link = document.getElementById('all-link')
+    construction_link = document.getElementById('construction-link')
+    installation_link = document.getElementById('installation-link')
+    electricity_link = document.getElementById('electricity-link')
+
+    $(document).ready(function(){
+      search_for_pill();
+    });
+
+    function search_for_pill(){
+      current_page = 1;
+
+      /* When current_page is one, set prev-link to disabled*/
+      document.querySelector('#prev-link').classList.add('disabled')
+
+      $.post('/search_pill', {
+        category: category,
+        current_page: current_page
+      }).done(function(data){
+        
+        document.querySelector('#prev-link').classList[data.has_prev == false ? 'add': 'remove']('disabled')
+        document.querySelector('#next-link').classList[data.has_next == false ? 'add' : 'remove']('disabled')
+
+        $(pill).html(data.result.map(item => `
+          <div class="col-md-4">
+            <div class="card card-plain card-blog">
+                <div class="card-header card-header-image">
+                    <a href="{{ url_for('portfolio.post', post_id='')}}${item.id}">
+                        <img class="img img-raised" src=${cdn('projects/1920_1920/', item.img_path)}>
+                    </a>
+                    <div class="colored-shadow" style="background-image: url(&quot;https://demos.creative-tim.com/marketplace/material-kit-pro/assets/img/bg5.jpg&quot;); opacity: 1;"></div>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-category text-info">${category}</h6>
+                    <h4 class="card-title">
+                      <a href="#pablo">${item.title_intro.substring(0, 40)}...</a>
+                    </h4>
+                    <p class="card-description">
+                      ${item.description_intro.substring(0, 80)}... <br>
+                      <a href="#pablo"> Read More </a>
+                    </p>
+                  </div>
+            </div>
+        </div>
+        `))
+        
+      }).fail(function(){
+        console.log('error')
+      });
+    }
+
+    function pill_paginate(direction){
+      $.post('/pill_paginate', {
+        category: category,
+        direction: direction,
+        current_page: current_page
+      }).done(function(data){
+        current_page = data.current_page
+
+        document.querySelector('#prev-link').classList[data.has_prev == false ? 'add': 'remove']('disabled')
+        document.querySelector('#next-link').classList[data.has_next == false ? 'add' : 'remove']('disabled')
+
+        $(pill).html(data.result.map(item => `
+          <div class="col-md-4">
+            <div class="card card-plain card-blog">
+                <div class="card-header card-header-image">
+                    <a href="{{ url_for('portfolio.post', post_id='')}}${item.id}">
+                        <img class="img img-raised" src=${cdn('projects/1920_1920/', item.img_path)}>
+                    </a>
+                    <div class="colored-shadow" style="background-image: url(&quot;https://demos.creative-tim.com/marketplace/material-kit-pro/assets/img/bg5.jpg&quot;); opacity: 1;"></div>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-category text-info">${category}</h6>
+                    <h4 class="card-title">
+                      <a href="#pablo">${item.title_intro.substring(0, 40)}...</a>
+                    </h4>
+                    <p class="card-description">
+                      ${item.description_intro.substring(0, 80)}... <br>
+                      <a href="#pablo"> Read More </a>
+                    </p>
+                  </div>
+            </div>
+        </div>
+        `))
+    
+
+      }).fail(function(){
+        console.log('There is a 500 server error')
+      });
+    }
+
+    // NAVIGATION AJAX
+    construction_link.addEventListener('click', function(){
+      pill = '#construction-pill';
+      category = 'Constructii';
+      
+      search_for_pill();    
+      return false;
+    });
+
+    installation_link.addEventListener('click', function(){
+      pill = '#installation-pill';
+      category = 'Instalatii';
+
+      search_for_pill(); 
+      return false;
+    });
+
+    all_link.addEventListener('click', function(){
+      pill = '#all-pill';
+      category = ''
+
+      search_for_pill(); 
+      return false;
+    })
+
+
+    </script>
+  {% endblock javascript %}
+  
+{% endblock content %}

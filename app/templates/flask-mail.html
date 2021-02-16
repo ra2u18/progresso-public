@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <!-- Fonts and icons -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+
+    <title>Flask Mail</title>
+
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar bg-primary">
+        <div class="container text-center">
+            <h4 class="title text-center" style="color:white; width:100%">Progresso Nel Edilizia</h4>
+        </div>
+    </nav>
+
+    <!--Body-->
+
+    <div class="section">
+        <div class="container">
+            {% if data|length > 0 %}
+                <h4 class="title" style="margin:0;">Persoana {{ data.name }} ti-a trimis un mesaj folosind formularul de contact. </h4>
+                <p class="description mb-5">Daca doriti sa o contactati, o puteti suna la numarul {{ data.phone }} sau scrie pe mailul {{ data.email }}.</p>
+                <table style="width:100%">
+                    <tr>
+                    <th>Continutul Mesajului</th> 
+                    </tr>
+                    <tr>
+                        <td> {{ data.message }} </td>
+                    </tr>
+                </table>
+            {% else %}
+                <h4 class="title" style="margin:0;">Persoana Rick ti-a trimis un mesaj folosind formularul de contact. </h4>
+                <p class="description mb-5">Daca doriti sa o contactati, o puteti suna la numarul 074298919238.</p>
+                <table style="width:100%">
+                    <tr>
+                    <th>Continutul Mesajului</th> 
+                    </tr>
+                    <tr>
+                        <td> Nothing too fancy right now </td>
+                    </tr>
+                </table>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

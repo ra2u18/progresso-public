@@ -1,0 +1,422 @@
+<!-- Inheriting styles from the layout file. -->
+{% extends "layout.html" %}
+
+{% block meta %}
+<meta name="description" content="Progresso Nel Edilizia este o firma de constructii si instalatii cu sediul in Suceava. Serviciile noastre sunt unice
+in industria constructiei locale, iar clientii nostri sunt fascinati!">
+{% endblock meta %}
+
+{% block content %}
+
+  <!-- Header picture with header title and subtitle -->
+  <div class="page-header header-filter" data-parallax="true" style="background-image: url('../static/assets/images/general/bg102_bg.jpg')">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <h2 class="title">Orientati pe clienti, 
+            companie progresiva,
+            condusa de valorile noastre</h2>
+          <h4>Calitatile noastre isi au radacina in capacitatea rapida de adaptare la nevoile clientilor si piata concurentiala. Infiintata in 2005, Progresso Nel Edilizia angajeaza muncitori din toate domeniile de la analisti de afaceri pana la muncitori in constructie.</h4>
+          <br>
+          <a id="contact-us-home" class="btn btn-secondary btm-md" href="{{ url_for('main.contact') }}">Contacteaza-ne</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="main main-raised">
+    <div class="container">
+
+      <!-- Our services section -->
+      <div class="section text-center">
+        <div class="row">
+          <div class="col-md-8 ml-auto mr-auto">
+            <h2 class="title">Despre Serviciile Noastre</h2>
+            <h5 class="description">
+              Echipati cu muncitori calificati si atestati in domeniul constructiei, oferim servicii de orice complexitate in aceasta arie. Materialele si echipamentul utilizat sunt de inalta calitate sporind astfel eficienta si siguranta in exploatare.
+            </h5>
+          </div>
+        </div>
+        <div class="features">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="info">
+                <div class="icon icon-info">
+                  <i class="material-icons">record_voice_over</i>
+                </div>
+                <h4 class="info-title">Comunicare si Planificare</h4>
+                <p>
+                  Comunicarea reprezinta legatura speciala pe care o avem cu clientii nostri, transparenta si siguranta sunt prioritate pentru noi. Timpul este unealta cea mai valoroasa pentru fiecare, de aceea folosim experienta echipei pentru o planificare si raportare rapida. 
+                </p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="info">
+                <div class="icon icon-success">
+                  <i class="material-icons">architecture</i>
+                </div>
+                <h4 class="info-title">Control complet, rezultate sigure</h4>
+                  <p>Detinem controlul asupra intregului process de productie al oricarui serviciu dorit de client. De la proiectare la dezvoltare pana la transport si montaj.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="info">
+                <div class="icon icon-danger">
+                  <i class="material-icons">supervisor_account</i>
+                </div>
+                <h4 class="info-title">Partener de incredere</h4>
+                  <p>Parte din misiunea si viziunea companiei Progresso Nel Edilizia au la baza promptitudinea, corectitudinea si seriozitatea in onorarea proiectelor. 
+                    Valorile firmei sunt foarte importante pentru noi. Ne bazam pe acestea atunci cand construim relatii de lunga durata cu clientii nostri.  
+                    </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Part of our projects - section-->
+      <h2 class="title text-center mb-5">O Parte din Proiectele Noastre</h2>
+      <div class="row pb-5 justify-content-center">
+        <div class="col-md-4">
+          {% if instal_recent is not none %}
+            <div class="card card-profile">
+              <div class="card-header card-header-image">
+                <a href="{{ url_for('portfolio.post', post_id='')}}{{instal_recent.id}}">
+                  <img class="img" src="https://dur5p8cvz36pv.cloudfront.net/static/assets/images/projects/800_533/{{instal_recent.get_background_image_path()}}">
+                  <div class="card-title text-left">
+                    {{instal_recent.title_bg[:50]}}...
+                  </div>
+                </a>
+</div>
+              <div class="card-body ">
+                <h6 class="card-category text-info">{{ instal_recent.category.category }}</h6>
+                <p class="card-description">
+                  {{instal_recent.description_intro[:160]}}...
+                </p>
+              </div>
+              <div class="card-footer justify-content-center">
+                <a href="{{ url_for('portfolio.post', post_id='')}}{{instal_recent.id}}" class="btn btn-info btn-round">
+                  <i class="material-icons">subject</i> Studiu de caz
+                </a>
+              </div>
+            </div>
+          {% else %}
+            <h3 class="title text-center">Empty card</h3>
+          {% endif %}
+        </div>
+        
+        <div class="col-md-4">
+          {% if constr_recent is not none %}
+            <div class="card card-profile">
+              <div class="card-header card-header-image">
+                <a href="{{ url_for('portfolio.post', post_id='')}}{{constr_recent.id}}">
+                  <img class="img" src="https://dur5p8cvz36pv.cloudfront.net/static/assets/images/projects/800_533/{{constr_recent.get_background_image_path()}}">
+                  <div class="card-title text-left">
+                    {{constr_recent.title_bg[:50]}}...
+                  </div>
+                </a>
+</div>
+              <div class="card-body ">
+                <h6 class="card-category text-info">{{ constr_recent.category.category }}</h6>
+                <p class="card-description">
+                  {{constr_recent.description_intro[:160]}}...
+                </p>
+              </div>
+              <div class="card-footer justify-content-center">
+                <a href="{{ url_for('portfolio.post', post_id='')}}{{constr_recent.id}}" class="btn btn-success btn-round">
+                  <i class="material-icons">subject</i> Studiu de caz
+                </a>
+              </div>
+            </div>
+          {% else %}
+            <h3 class="title text-center">Empty card</h3>
+          {% endif %}
+        </div>
+        
+        <div class="col-md-4">
+          {% if elec_recent is not none %}
+            <div class="card card-profile">
+              <div class="card-header card-header-image">
+                <a href="{{ url_for('portfolio.post', post_id='')}}{{elec_recent.id}}">
+                  <img class="img" src="https://dur5p8cvz36pv.cloudfront.net/static/assets/images/projects/800_533/{{elec_recent.get_background_image_path()}}">
+                  <div class="card-title text-left">
+                    {{elec_recent.title_bg[:50]}}...
+                  </div>
+                </a>
+          </div>
+              <div class="card-body ">
+                <h6 class="card-category text-info">{{ elec_recent.category.category }}</h6>
+                <p class="card-description">
+                  {{elec_recent.description_intro[:160]}}...
+                </p>
+              </div>
+              <div class="card-footer justify-content-center">
+                <a href="{{ url_for('portfolio.post', post_id='')}}{{elec_recent.id}}" class="btn btn-danger btn-round">
+                  <i class="material-icons">subject</i> Studiu de caz
+                </a>
+              </div>
+            </div>
+          {% else %}
+            <h3 class="title text-center">Empty card</h3>
+          {% endif %}
+        </div>
+       
+      </div>
+
+
+    </div>
+  </div>
+
+  <!-- Testimonials section -->
+  <div class="testimonials-1 section-image" style="background-image: url('./static/assets/images/general/test3.jpg')">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 ml-auto mr-auto text-center">
+          <h2 class="title">Ce spun Clientii despre Noi</h2>
+          <h5 class="description">Ai nevoie de mai multa credibilitate in serviciile Progresso Nel Edilizia? Priveste ce spun persoanele care au ne-au ales pe noi.</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card card-testimonial">
+            <div class="icon">
+              <i class="material-icons">format_quote</i>
+            </div>
+            <div class="card-body ">
+              <h5 class="card-description">
+                “Foarte flexibili si deschisi la idei noi si ‘schimbari de plan’. Lucreaza repede si ofera servicii de suport excelente. Sunt foarte multumit de colaborarea avuta cu Progresso Nel Edilizia."
+              </h5>
+            </div>
+            <div class="card-footer ">
+              <h4 class="card-title">Paul</h4>
+              <h6 class="card-category">CEO CONSIX</h6>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card card-testimonial">
+            <div class="icon">
+              <i class="material-icons">format_quote</i>
+            </div>
+            <div class="card-body ">
+              <h5 class="card-description">
+                "Progresso Nel Edilizia a oferit un serviciu incredibil de rapid avand in vedere proiectare gradinitei Scolii Crestine Filadelfia. Experienta si perspectiva diferita de abordare a proiectului au atins orice stardard de calitate si siguranta a consilierilor nostri.""
+              </h5>
+            </div>
+            <div class="card-footer ">
+              <h4 class="card-title">Nicu Cotlet</h4>
+              <h6 class="card-category">Director Scoala Filadelfia</h6>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card card-testimonial">
+            <div class="icon">
+              <i class="material-icons">format_quote</i>
+            </div>
+            <div class="card-body ">
+              <h5 class="card-description">
+                “Am lucrat foarte bine cu echipa Progresso Nel Edilizia - sunt cu adevarat profesionisti. Au inteles din prima cerintele mele ca si client. Ii recomand cu toata increderea!”
+              </h5>
+            </div>
+            <div class="card-footer ">
+              <h4 class="card-title">Radu Palagheanu</h4>
+              <h6 class="card-category">CEO Palagheanu Joinery</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Story -->
+  <div class="section section-blog col-md-10 ml-auto mr-auto">
+    <div class="container">
+        <h2 class="title text-center">Securitate, Sanatate si Mediu Inconjurator</h2>
+        <p class="description text-center">
+          Pentru Progresso Nel Edilizia protectia mediului si inovatiile aduse acestuia se afla in stransa legatura. 
+          <br>
+          Obiectivele noastre, in materie de mediu inconjurator, gravitateaza in jurul standardului global - ISO 14001 pentru gestionare a mediului inconjurator.
+        </p>
+        <div class="section-story-overview">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="image-container image-left" style="background-image: url('../static/assets/images/general/home-end-1.jpg')">
+                        <!-- First image on the left side -->
+                        <p class="blockquote blockquote-secondary">
+                          "Sigurata nu este un exercitiu intelectual sau de stimulare pentru o munca mai eficienta. De fapt, ea joaca un rol important 
+                          in a determina daca persoanele din jurul nostru vor evita sau nu o accidentare."
+                            <br>
+                            <br>
+                            <small>-NOAA</small>
+                        </p>
+                    </div>
+                    <!-- Second image on the left side of the article -->
+                    <div class="image-container image-left-bottom" style="background-image: url('../static/assets/images/general/home-end-4.jpg')">
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <!-- First image on the right side, above the article -->
+                    <div class="image-container image-right" style="background-image: url('../static/assets/images/general/home-end-3.jpg')">
+                    </div>
+                    <h3>Ce inseamna sanatatea anagajatilor si protectia mediului inconjurator pentru noi? </h3>
+                    <p>
+                      In proiectarea si livrarea serviciilor noastre, luam in calcul utilizarea resurselor si emisiile produse si incercam sa minimizam impactul acestora asupra angajatilor si persoanelor in treacat.
+                      Imbunatatim constant echipamentele de protectie si incurajam munca in medii sigure pentru a evita orice tip de accident in cadrul firmei.
+                    </p>
+                    <h3>Constructiile Verzi</h3>
+                    <p>
+                      Visul nostru este sa-i ajutam pe clienti sa atinga obiectivul de a construi retele de apa, canalizari si cladiri eco-compatibile. Pentru aceasta, la dorinta clientului, putem elibera date privind
+                      impactul serviciilor noastre asupra mediului, pentru a demonstra contributia Progresso Nel Edilizia asupra constructiilor verzi.
+                    </p>
+                    <p>
+                      Incercam, in mod firesc, sa aplicam asupra strategiilor noastre, standarde globale legate de mediu inconjurator si siguranta. Suntem mereu in cautare de noi optiuni pentru a minimiza impactul 
+                      nostru asupra naturii, in special cand lucram prin apropierea institutiilor social-culturale.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="pricing-5 section-gray" id="pricing-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h3 class="title text-center">Alege serviciul care te poate ajuta</h3>
+          <ul class="nav nav-pills nav-pills-primary">
+            <li class="nav-item">
+              <a class="nav-link active" href="#metallic-pill" data-toggle="tab">Structuri Metalice</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#installation-pill" data-toggle="tab">Termoficare</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#building-pill" data-toggle="tab">Cladiri social-culturale</a>
+            </li>
+          </ul>
+          <p class="text-gray">
+            Serviciile firmei de constructii Progresso Nel Edilizia acopera urmatoarele arii, apasati pe ele pentru a fi redirectionati:
+            <ul>
+              <li>
+                <p class="text-primary"><strong><a href="{{ url_for('main.metallic_structures') }}">Structuri metalice</a></strong></p>
+              </li>
+              <li>
+                <p class="text-primary"><strong><a href="{{ url_for('main.installation') }}">Retele apa si termoficare</a></strong></p>
+              </li>
+              <li>
+                <p class="text-primary"><strong><a href="{{ url_for('main.buildings') }}">Cladiri socio-culturale</a></strong></p>
+              </li>
+            </ul>
+          </p>
+        </div>
+        <div class="col-md-7 ml-auto mr-auto">
+          <div class="tab-content tab-space">
+            <div class="tab-pane active" id="metallic-pill">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card card-blog">
+                    <div class="card-header card-header-image">
+                      <img class="img" src="../static/assets/images/general/metallic-pill.jpeg">
+
+                    </div>
+                    <div class="card-body">
+                      <h6 class="card-category text-info">Structuri metalice</h6>
+                      <p class="card-description">
+                        Hala metalica industriala pentru fabricatie si depozitare. Livrarea proiectului a venit impreuna cu finisarea platformei de beton din exterior si parcare pentru muncitorii firmei...
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card card-blog">
+                    <div class="card-header card-header-image">
+                        <img class="img" src="../static/assets/images/general/metallic-pill2.jpeg">
+
+                    </div>
+                    <div class="card-body">
+                      <h6 class="card-category text-info">Structuri metalice</h6>
+                      <p class="card-description">
+                        Terasa de restaurant in Vatra Dornei realizata pe structura metalica. Proiectul demonstreaza flexibilitatea metalului si in zone
+                        mai putin ideale. 
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="installation-pill">
+              <div class="row justify-content-center">
+                <div class="col-md-6">
+                  <div class="card card-blog">
+                    <div class="card-header card-header-image">
+                      <img class="img" src="../static/assets/images/general/installation-pill.jpeg">
+
+                    </div>
+                    <div class="card-body">
+                      <h6 class="card-category text-info">Termoficare</h6>
+                      <p class="card-description">
+                        Reabilitarea punctelor termice din Iasi. Conductele sunt plasate in canale de beton, in pamant, acoperite cu nisip. Aceasta
+                        poate ajuta impotriva unei potetiale stagnari de apa din infiltratii.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card card-blog">
+                    <div class="card-header card-header-image">
+                        <img class="img" src="../static/assets/images/general/installation-pill2.jpeg">
+
+                    </div>
+                    <div class="card-body">
+                      <h6 class="card-category text-info">Termoficare</h6>
+                      <p class="card-description">
+                        Sistem de termoficare reprezentat de schimbatoare de caldura, regulator de temperatura, pompa de circulatie, filtru de impuritati etc.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="building-pill">
+              <div class="row justify-content-center">
+                <div class="col-md-6">
+                  <div class="card card-blog">
+                    <div class="card-header card-header-image">
+                      <img class="img" src="../static/assets/images/general/building-pill1.jpg">
+                      <div class="colored-shadow" style="background-image: url(&quot;./assets/img/examples/card-blog1.jpg&quot;); opacity: 1;"></div>
+                    </div>
+                    <div class="card-body">
+                      <h6 class="card-category text-info">Cladiri social-culturale</h6>
+                      <p class="card-description">
+                        Progresso Nel Edilizia a proiectat si condus constructia Gradinitei in campusul Liceului Teoretic Filadelfia.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+{% block javascript %}
+<script type="text/javascript">
+  
+  window.onload = function(){  
+    ga('send', 'screenview', {
+      'appName': 'Progresso Nel Edilizia',
+      'screenName': 'Acasa'
+    });
+
+    document.getElementById('contact-us-home').onclick = function(){
+      ga('send', 'event', 'Buton Contact', 'Acasa');
+    }
+  }
+</script>
+{% endblock javascript %}

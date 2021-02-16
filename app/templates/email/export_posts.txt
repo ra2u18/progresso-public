@@ -1,0 +1,8 @@
+Buna ziua {{ user.username }},
+
+Veti gasi atasat in acest email {{ what }} pe care le-ati exportat!
+
+Cu drag,
+
+Echipa Progresso
+		

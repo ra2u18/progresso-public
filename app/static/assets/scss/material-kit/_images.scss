@@ -1,0 +1,15 @@
+img{
+    max-width: 100%;
+    border-radius: 1px;
+}
+
+.img-thumbnail{
+    border-radius: 16px;
+}
+.img-raised{
+    @include shadow-big-image();
+}
+
+.rounded{
+    border-radius: $border-radius-large !important;
+}
